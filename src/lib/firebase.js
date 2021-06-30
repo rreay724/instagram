@@ -5,7 +5,7 @@ import "firebase/auth";
 import { seedDatabase } from "../seed";
 
 const config = {
-  apiKey: process.env.REACT_APP_FIREBASE_API,
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: "instagram-d4f8e.firebaseapp.com",
   projectId: "instagram-d4f8e",
   storageBucket: "instagram-d4f8e.appspot.com",
