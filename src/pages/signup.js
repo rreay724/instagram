@@ -3,6 +3,7 @@ import { useState, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import FirebaseContext from "../context/firebase";
 import * as ROUTES from "../constants/routes";
+import { doesUsernameExist } from "../services/firebase";
 
 function SignUp() {
   const history = useHistory();
@@ -19,8 +20,38 @@ function SignUp() {
   const handleSignUp = async (event) => {
     event.preventDefault();
 
-    try {
-    } catch (error) {}
+    const usernameExists = await doesUsernameExist(username);
+    console.log("usernameExists", usernameExists);
+    if (!usernameExists.length) {
+      try {
+        const createdUserResult = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(emailAddress, password);
+
+        // authentication
+        // emailAddress & password & username(display name)
+        await createdUserResult.user.updateProfile({ displayName: username });
+
+        // firebase user collection (create a document)
+        await firebase.firestore().collection("users").add({
+          userId: createdUserResult.user.uid,
+          username: username.toLowerCase(),
+          fullName,
+          emailAddress: emailAddress.toLowerCase(),
+          following: [],
+          dateCreated: Date.now(),
+        });
+
+        history.push(ROUTES.DASHBOARD);
+      } catch (error) {
+        setFullName("");
+        setEmailAddress("");
+        setPassword("");
+        setError(error.message);
+      }
+    } else {
+      setError("That username is already taken, please try another.");
+    }
   };
 
   useEffect(() => {
@@ -29,15 +60,15 @@ function SignUp() {
 
   return (
     <div className="container flex mx-auto max-w-screen-md items-center h-screen">
-      <div className="flex w-3/5">
+      <div className="sm:flex w-3/5 hidden">
         <img
           src="/images/iphone-with-profile.jpeg"
           alt="iPhone"
           className="max-w-full"
         />
       </div>
-      <div className="flex flex-col w-2/5">
-        <div className="flex flex-col  items-center bg-white p-4 border border-gray-primary mb-4 rounded">
+      <div className="flex flex-col w-full sm:w-2/5 mx-10 md:mx-0 sm:mr-10">
+        <div className="flex flex-col  items-center sm:bg-white p-4 sm:border border-gray-primary mb-4 rounded">
           <h1 className="flex justify-center w-full">
             <img
               className="mt-2 w-6/12 mb-4"
@@ -94,7 +125,7 @@ function SignUp() {
             </button>
           </form>
         </div>
-        <div className="flex justify-center items-center flex-col w-full bg-white p-4 border border-gray-primary rounded">
+        <div className="flex justify-center items-center flex-col w-full sm:bg-white p-4 sm:border border-gray-primary rounded">
           <p className="text-sm">
             Have an account?{" "}
             <Link to={ROUTES.LOGIN} className="font-bold text-blue-medium">
