@@ -4,20 +4,19 @@ import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import { getSuggestedProfiles } from "../../services/firebase";
 
-export default function Suggestions({ userId }) {
+export default function Suggestions({ userId, following }) {
   const [profiles, setProfiles] = useState(null);
 
   // get suggested profiles
   useEffect(() => {
     async function suggestedProfiles() {
-      const response = await getSuggestedProfiles(userId);
+      const response = await getSuggestedProfiles(userId, following);
       setProfiles(response);
     }
     if (userId) {
-      getSuggestedProfiles();
+      suggestedProfiles();
     }
-
-    console.log("userId", userId);
+    console.log("profiles", profiles);
   }, [userId]);
   // hint: use the firebase services
   // call the async function ^^^ within useEffect
@@ -34,4 +33,7 @@ export default function Suggestions({ userId }) {
   ) : null;
 }
 
-Suggestions.propTypes = { userId: PropTypes.string };
+Suggestions.propTypes = {
+  userId: PropTypes.string,
+  following: PropTypes.array,
+};
