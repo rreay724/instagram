@@ -3,8 +3,9 @@ import useUser from "../../hooks/use-user";
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import { getSuggestedProfiles } from "../../services/firebase";
+import SuggestedProfile from "./SuggestedProfile";
 
-export default function Suggestions({ userId, following }) {
+export default function Suggestions({ userId, following, loggedInUserDocId }) {
   const [profiles, setProfiles] = useState(null);
 
   // get suggested profiles
@@ -13,11 +14,12 @@ export default function Suggestions({ userId, following }) {
       const response = await getSuggestedProfiles(userId, following);
       setProfiles(response);
     }
+
     if (userId) {
       suggestedProfiles();
     }
-    console.log("profiles", profiles);
   }, [userId]);
+
   // hint: use the firebase services
   // call the async function ^^^ within useEffect
   // store in state so
@@ -29,6 +31,18 @@ export default function Suggestions({ userId, following }) {
       <div className="text-sm flex items-center align-items justify-between mb-2">
         <p className="font-bold text-gray-base">Suggestions for you</p>
       </div>
+      <div className="mt-4 grid gap-5">
+        {profiles.map((profile) => (
+          <SuggestedProfile
+            key={profile.docId}
+            suggestedProfileDocId={profile.docId}
+            username={profile.username}
+            profileId={profile.userId}
+            userId={userId}
+            loggedInUserDocId={loggedInUserDocId}
+          />
+        ))}
+      </div>
     </div>
   ) : null;
 }
@@ -36,4 +50,5 @@ export default function Suggestions({ userId, following }) {
 Suggestions.propTypes = {
   userId: PropTypes.string,
   following: PropTypes.array,
+  loggedInUserDocId: PropTypes.string,
 };

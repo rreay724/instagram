@@ -29,5 +29,5 @@ export default memo(User);
 
 User.propTypes = {
   username: PropTypes.string,
-  fullName: PropTypes.string.isRequired,
+  fullName: PropTypes.string,
 };
