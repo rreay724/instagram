@@ -3,7 +3,11 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     fill: (theme) => ({ red: theme("colors.red.primary") }),
-    extend: {},
+    extend: {
+      animation: {
+        bounce: "bounce 800ms ease-in-out",
+      },
+    },
     colors: {
       white: "#ffffff",
       blue: { medium: "#005c98" },
