@@ -13,7 +13,6 @@ export default function Comments({
 }) {
   const [comments, setComments] = useState(allComments);
   const [showComments, setShowComments] = useState(false);
-  const [toggle, setToggle] = useState(false);
 
   const handleClickComments = React.useCallback(() => {
     if (!showComments) {
@@ -21,16 +20,9 @@ export default function Comments({
     } else {
       setShowComments(false);
     }
-
-    if (!toggle) {
-      setToggle(true);
-    } else {
-      setToggle(false);
-    }
   });
 
   console.log("showComments", showComments);
-  console.log("toggle", toggle);
 
   return (
     <>
@@ -40,17 +32,17 @@ export default function Comments({
             className="text-sm text-gray-base mb-1 cursor-pointer"
             onClick={handleClickComments}
           >
-            {!showComments && !toggle ? "View all comments" : "Hide comments"}
+            {!showComments ? "View all comments" : "Hide comments"}
           </p>
         )}
         {comments.slice(0, 3).map((item) => (
           <p key={`${item.comment}-${item.displayName}`} className="mb-1">
             <Link to={`/p/${item.displayName}`}>
-              {showComments && toggle ? (
+              {showComments ? (
                 <span className="mr-1 font-bold">{item.displayName}</span>
               ) : null}
             </Link>
-            {showComments && toggle ? <span>{item.comment}</span> : null}
+            {showComments ? <span>{item.comment}</span> : null}
           </p>
         ))}
         <p className="text-gray-base uppercase text-xs mt-2">
