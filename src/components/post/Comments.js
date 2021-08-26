@@ -43,7 +43,7 @@ export default function Comments({
             <span>{item.comment}</span>
           </p>
         ))}
-        {comments.slice(1, 3).map((item) => (
+        {comments.slice(1, comments.length).map((item) => (
           <p key={`${item.comment}-${item.displayName}`} className="mb-1">
             <Link to={`/p/${item.displayName}`}>
               {showComments ? (
