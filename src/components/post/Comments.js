@@ -35,7 +35,15 @@ export default function Comments({
             {!showComments ? "View all comments" : "Hide comments"}
           </p>
         )}
-        {comments.slice(0, 3).map((item) => (
+        {comments.slice(0, 1).map((item) => (
+          <p key={`${item.comment}-${item.displayName}`} className="mb-1">
+            <Link to={`/p/${item.displayName}`}>
+              <span className="mr-1 font-bold">{item.displayName}</span>
+            </Link>
+            <span>{item.comment}</span>
+          </p>
+        ))}
+        {comments.slice(1, 3).map((item) => (
           <p key={`${item.comment}-${item.displayName}`} className="mb-1">
             <Link to={`/p/${item.displayName}`}>
               {showComments ? (
