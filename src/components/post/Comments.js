@@ -14,13 +14,13 @@ export default function Comments({
   const [comments, setComments] = useState(allComments);
   const [showComments, setShowComments] = useState(false);
 
-  const handleClickComments = React.useCallback(() => {
+  const handleClickComments = () => {
     if (!showComments) {
       setShowComments(true);
     } else {
       setShowComments(false);
     }
-  });
+  };
 
   console.log("showComments", showComments);
 
