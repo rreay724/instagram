@@ -41,7 +41,7 @@ export default function AddComment({
       >
         <input
           aria-label="Add a comment"
-          autocomplete="off"
+          autoComplete="off"
           className="focus:outline-none text-sm text-gray-base w-full mr-3 py-5 px-4"
           type="text"
           name="add-comment"

@@ -10,13 +10,14 @@ module.exports = {
     },
     colors: {
       white: "#ffffff",
-      blue: { medium: "#005c98" },
+      blue: { medium: "#005c98", light: "#0095F6" },
       black: { light: "#262626", faded: "#00000059" },
       gray: { base: "#616161", background: "#fafafa", primary: "#dbdbdb" },
       red: { primary: "#ed4956" },
     },
   },
   variants: {
+    display: ["group-hover"],
     extend: {},
   },
   plugins: [],

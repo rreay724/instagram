@@ -8,6 +8,7 @@ function Header() {
   const { firebase } = useContext(FirebaseContext);
   const { user } = useContext(Usercontext);
   const history = useHistory();
+  console.log("user display name", user.displayName);
 
   //   console.log("user", user);
   return (

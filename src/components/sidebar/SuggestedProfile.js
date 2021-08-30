@@ -34,7 +34,7 @@ export default function SuggestedProfile({
         </Link>
       </div>
       <button
-        className="text-xs font-bold text-blue-medium"
+        className="text-xs font-bold text-blue-light"
         type="button"
         onClick={handleFollowUser}
       >
