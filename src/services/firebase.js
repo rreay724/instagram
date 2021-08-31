@@ -45,6 +45,17 @@ export async function getSuggestedProfiles(userId, following) {
     );
 }
 
+export async function getFollowers(userId, following) {
+  const result = await firebase.firestore().collection("users").limit(10).get();
+
+  return result.docs
+    .map((user) => ({ ...user.data(), docId: user.id }))
+    .filter(
+      (profile) =>
+        profile.userId !== userId && following.includes(profile.userId)
+    );
+}
+
 export async function updateLoggedInUserFollowing(
   loggedInUserDocId, // currently logged in user document id (karl's profile)
   profileId, // the user that karl requests to follow

@@ -29,7 +29,7 @@ export default function UserProfile({ user }) {
   }, [user.username]);
 
   return (
-    <>
+    <div>
       <Header
         photosCount={photosCollection ? photosCollection.length : 0}
         profile={profile}
@@ -37,7 +37,7 @@ export default function UserProfile({ user }) {
         setFollowerCount={dispatch}
       ></Header>
       <Photos photos={photosCollection} />
-    </>
+    </div>
   );
 }
 

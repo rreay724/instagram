@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import useUser from "../../hooks/use-user";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
+import FollowerPopUp from "./FollowerPopUp";
 
 export default function Header({
   photosCount,
@@ -19,6 +20,7 @@ export default function Header({
 }) {
   const { user } = useUser();
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
+  const [visible, setVisible] = useState("invisible");
   const activeButtonFollow = user.username && user.username !== profileUsername;
   const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
@@ -33,6 +35,19 @@ export default function Header({
       user.userId
     );
   };
+
+  const handleClick = () => {
+    if (visible === "invisible") {
+      setVisible("visible");
+    }
+  };
+
+  const closeWindow = () => {
+    if (visible === "visible") {
+      setVisible("invisible");
+    }
+  };
+
   useEffect(() => {
     const isLoggedInUserFollowingProfile = async () => {
       const isFollowing = await isUserFollowingProfile(
@@ -44,6 +59,7 @@ export default function Header({
     if (user.username && profileUserId) {
       isLoggedInUserFollowingProfile();
     }
+    console.log("followers", followers);
   }, [user.username, profileUserId]);
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
@@ -83,7 +99,21 @@ export default function Header({
                 <span className="font-bold">{photosCount}</span>
                 {` `}photos
               </p>
-              <p className="mr-10">
+              <p
+                className={`mr-10 ${
+                  visible === "invisible" ? "cursor-pointer" : null
+                }`}
+                onClick={handleClick}
+              >
+                {visible ? (
+                  <FollowerPopUp
+                    closeWindow={closeWindow}
+                    visible={visible}
+                    isFollowing={isFollowingProfile}
+                    username={profileUsername}
+                    fullName={fullName}
+                  />
+                ) : null}
                 <span className="font-bold">{followerCount}</span>
                 {` `}
                 {followerCount === 1 ? "follower" : "followers"}
