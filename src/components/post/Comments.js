@@ -22,8 +22,6 @@ export default function Comments({
     }
   };
 
-  console.log("showComments", showComments);
-
   return (
     <>
       <div className="p-4 pt-1 pb-4">

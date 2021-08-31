@@ -109,9 +109,7 @@ export default function Header({
                   <FollowerPopUp
                     closeWindow={closeWindow}
                     visible={visible}
-                    isFollowing={isFollowingProfile}
-                    username={profileUsername}
-                    fullName={fullName}
+                    followers={followers}
                   />
                 ) : null}
                 <span className="font-bold">{followerCount}</span>
