@@ -108,6 +108,28 @@ export async function getPhotos(userId, following) {
   return photosWithUserDetails;
 }
 
+export const getFollowers = async (followerIds) => {
+  const result = await firebase
+    .firestore()
+    .collection("users")
+    .where("userId", "in", followerIds)
+    .get();
+
+  const followers = result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }))[0];
+  return followers;
+};
+
+// `export const getSaveData = async (postedId) => {
+//   const array = [postedId];
+//   const snapshot = await db.collection('posts').get();
+//   const data = snapshot.docs.map((doc) => ({ postedId: doc.id,
+//   ...doc.data() }));
+//   return data;
+//   };`
+
 export async function getUserPhotosByUsername(username) {
   const [user] = await getUserByUsername(username);
   const result = await firebase
@@ -160,15 +182,3 @@ export async function toggleFollow(
     isFollowingProfile
   );
 }
-
-// export async function getPhotos(userId, following) {
-//   const result = await firebase
-//     .firestore()
-//     .collection("photos")
-//     .where("userId", "in", following)
-//     .get();
-
-//   const userFollowedPhotos = result.docs.map((photo) => ({
-//     ...photo.data(),
-//     docId: photo.id,
-//   }));

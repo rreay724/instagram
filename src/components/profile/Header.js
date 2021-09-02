@@ -4,6 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import useUser from "../../hooks/use-user";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 import FollowerPopUp from "./FollowerPopUp";
+import FollowingPopUp from "./FollowingPopup";
 
 export default function Header({
   photosCount,
@@ -21,6 +22,7 @@ export default function Header({
   const { user } = useUser();
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
   const [visible, setVisible] = useState("invisible");
+  const [followingVisible, setFollowingVisible] = useState("invisible");
   const activeButtonFollow = user.username && user.username !== profileUsername;
   const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
@@ -42,9 +44,21 @@ export default function Header({
     }
   };
 
+  const handleClickFollowing = () => {
+    if (followingVisible === "invisible") {
+      setFollowingVisible("visible");
+    }
+  };
+
   const closeWindow = () => {
     if (visible === "visible") {
       setVisible("invisible");
+    }
+  };
+
+  const closeWindowFollowing = () => {
+    if (followingVisible === "visible") {
+      setFollowingVisible("invisible");
     }
   };
 
@@ -116,7 +130,19 @@ export default function Header({
                 {` `}
                 {followerCount === 1 ? "follower" : "followers"}
               </p>
-              <p className="mr-10">
+              <p
+                className={`mr-10 ${
+                  followingVisible === "invisible" ? "cursor-pointer" : null
+                }`}
+                onClick={handleClickFollowing}
+              >
+                {visible ? (
+                  <FollowingPopUp
+                    closeWindow={closeWindowFollowing}
+                    visible={followingVisible}
+                    followers={followers}
+                  />
+                ) : null}
                 <span className="font-bold">{following.length}</span>
                 {` `}following
               </p>
