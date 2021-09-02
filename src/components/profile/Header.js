@@ -63,6 +63,7 @@ export default function Header({
   };
 
   useEffect(() => {
+    // console.log(user);
     const isLoggedInUserFollowingProfile = async () => {
       const isFollowing = await isUserFollowingProfile(
         user.username,
@@ -73,7 +74,7 @@ export default function Header({
     if (user.username && profileUserId) {
       isLoggedInUserFollowingProfile();
     }
-    console.log("followers", followers);
+    // console.log("followers", followers);
   }, [user.username, profileUserId]);
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
@@ -117,7 +118,7 @@ export default function Header({
                 className={`mr-10 ${
                   visible === "invisible" ? "cursor-pointer" : null
                 }`}
-                onClick={handleClick}
+                onClick={followingVisible === "invisible" ? handleClick : null}
               >
                 {visible ? (
                   <FollowerPopUp

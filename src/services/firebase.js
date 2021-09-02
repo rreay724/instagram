@@ -109,17 +109,21 @@ export async function getPhotos(userId, following) {
 }
 
 export const getFollowers = async (followerIds) => {
-  const result = await firebase
-    .firestore()
-    .collection("users")
-    .where("userId", "in", followerIds)
-    .get();
+  if (followerIds.length > 0) {
+    const result = await firebase
+      .firestore()
+      .collection("users")
+      .where("userId", "in", followerIds)
+      .get();
 
-  const followers = result.docs.map((item) => ({
-    ...item.data(),
-    docId: item.id,
-  }))[0];
-  return followers;
+    const followers = Promise.all(
+      await result.docs.map(async (item) => ({
+        ...item.data(),
+        docId: item.id,
+      }))
+    );
+    return followers;
+  }
 };
 
 // `export const getSaveData = async (postedId) => {

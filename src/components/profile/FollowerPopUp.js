@@ -1,9 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import FollowerRow from "./FollowerRow";
 import { getFollowers } from "../../services/firebase";
-// import useFollowers from "../../hooks/use-followers";
 
 export default function FollowerPopUp({ visible, closeWindow, followers }) {
+  useEffect(() => {
+    const response = getFollowers(followers);
+    console.log(response);
+  }, [followers]);
   return (
     <div
       className={`overflow-auto z-30 m-0 p-0 h-2/6 w-3/12  border rounded-xl bg-white text-left fixed ${visible}`}
