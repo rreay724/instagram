@@ -108,7 +108,7 @@ export async function getPhotos(userId, following) {
   return photosWithUserDetails;
 }
 
-export const getFollowers = async (followerIds) => {
+export async function getFollowers(followerIds) {
   if (followerIds.length > 0) {
     const result = await firebase
       .firestore()
@@ -116,7 +116,7 @@ export const getFollowers = async (followerIds) => {
       .where("userId", "in", followerIds)
       .get();
 
-    const followers = Promise.all(
+    const followers = await Promise.all(
       await result.docs.map(async (item) => ({
         ...item.data(),
         docId: item.id,
@@ -124,7 +124,7 @@ export const getFollowers = async (followerIds) => {
     );
     return followers;
   }
-};
+}
 
 // `export const getSaveData = async (postedId) => {
 //   const array = [postedId];
