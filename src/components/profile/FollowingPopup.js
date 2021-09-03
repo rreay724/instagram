@@ -28,15 +28,17 @@ export default function Following({ visible, closeWindow, following }) {
         />
       </div>
 
-      {followingList
-        ? followingList.map((following) => (
-            <FollowerRow
-              following={true}
-              username={following?.username}
-              fullName={following?.fullName}
-            />
-          ))
-        : null}
+      {followingList ? (
+        followingList.map((following) => (
+          <FollowerRow
+            following={true}
+            username={following?.username}
+            fullName={following?.fullName}
+          />
+        ))
+      ) : (
+        <p className="ml-16 p-5">You're not following anyone</p>
+      )}
     </div>
   );
 }

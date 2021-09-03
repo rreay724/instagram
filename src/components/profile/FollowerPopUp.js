@@ -14,8 +14,6 @@ export default function FollowerPopUp({ visible, closeWindow, followers }) {
     }
   }, [followers]);
 
-  // console.log(followersList);
-
   return (
     <div
       className={`overflow-auto z-30 m-0 p-0 h-2/6 w-96  border rounded-xl bg-white text-left fixed ${visible}`}
@@ -28,15 +26,20 @@ export default function FollowerPopUp({ visible, closeWindow, followers }) {
           onClick={closeWindow}
         />
       </div>
-      {followersList
-        ? followersList.map((follower) => (
-            <FollowerRow
-              following={true}
-              username={follower?.username}
-              fullName={follower?.fullName}
-            />
-          ))
-        : null}
+      {followersList ? (
+        followersList.map((follower) => (
+          <FollowerRow
+            key={follower?.docId}
+            followerProfileDocId={follower.docId}
+            following={true}
+            username={follower?.username}
+            fullName={follower?.fullName}
+            userId={follower?.userId}
+          />
+        ))
+      ) : (
+        <p className="ml-16 p-5">No followers</p>
+      )}
     </div>
   );
 }
