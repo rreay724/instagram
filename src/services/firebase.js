@@ -45,17 +45,6 @@ export async function getSuggestedProfiles(userId, following) {
     );
 }
 
-export async function getFollowers(userId, following) {
-  const result = await firebase.firestore().collection("users").limit(10).get();
-
-  return result.docs
-    .map((user) => ({ ...user.data(), docId: user.id }))
-    .filter(
-      (profile) =>
-        profile.userId !== userId && following.includes(profile.userId)
-    );
-}
-
 export async function updateLoggedInUserFollowing(
   loggedInUserDocId, // currently logged in user document id (karl's profile)
   profileId, // the user that karl requests to follow
@@ -118,6 +107,32 @@ export async function getPhotos(userId, following) {
 
   return photosWithUserDetails;
 }
+
+export async function getFollowers(followerIds) {
+  if (followerIds.length > 0) {
+    const result = await firebase
+      .firestore()
+      .collection("users")
+      .where("userId", "in", followerIds)
+      .get();
+
+    const followers = await Promise.all(
+      await result.docs.map(async (item) => ({
+        ...item.data(),
+        docId: item.id,
+      }))
+    );
+    return followers;
+  }
+}
+
+// `export const getSaveData = async (postedId) => {
+//   const array = [postedId];
+//   const snapshot = await db.collection('posts').get();
+//   const data = snapshot.docs.map((doc) => ({ postedId: doc.id,
+//   ...doc.data() }));
+//   return data;
+//   };`
 
 export async function getUserPhotosByUsername(username) {
   const [user] = await getUserByUsername(username);
