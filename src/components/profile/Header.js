@@ -141,7 +141,7 @@ export default function Header({
                   <FollowingPopUp
                     closeWindow={closeWindowFollowing}
                     visible={followingVisible}
-                    followers={followers}
+                    following={following}
                   />
                 ) : null}
                 <span className="font-bold">{following.length}</span>
