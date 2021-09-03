@@ -31,6 +31,7 @@ export default function FollowingPopUp({ visible, closeWindow, following }) {
       {followingList ? (
         followingList.map((following) => (
           <FollowerRow
+            key={following?.userId}
             following={true}
             username={following?.username}
             fullName={following?.fullName}

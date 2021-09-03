@@ -39,6 +39,7 @@ function SignUp() {
           emailAddress: emailAddress.toLowerCase(),
           following: [],
           dateCreated: Date.now(),
+          followers: [],
         });
 
         history.push(ROUTES.DASHBOARD);

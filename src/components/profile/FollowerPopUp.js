@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import FollowerRow from "./FollowerRow";
 import { getFollowers } from "../../services/firebase";
+import PropTypes from "prop-types";
 
 export default function FollowerPopUp({ visible, closeWindow, followers }) {
   const [followersList, setFollowersList] = useState([]);
@@ -29,13 +30,10 @@ export default function FollowerPopUp({ visible, closeWindow, followers }) {
       {followersList ? (
         followersList.map((follower) => (
           <FollowerRow
-            key={follower?.docId}
-            followerProfileDocId={follower.docId}
+            key={follower?.userId}
             following={true}
             username={follower?.username}
             fullName={follower?.fullName}
-            userId={follower?.userId}
-            visible={visible}
           />
         ))
       ) : (
@@ -44,3 +42,9 @@ export default function FollowerPopUp({ visible, closeWindow, followers }) {
     </div>
   );
 }
+
+// FollowerPopUp.propTypes = {
+//   username: PropTypes.string.isRequired,
+//   fullName: PropTypes.string.isRequired,
+//   following: PropTypes.bool.isRequired,
+// };

@@ -78,7 +78,10 @@ function Header() {
                     <img
                       className="rounded-full h-8 w-8 flex"
                       src={`/images/avatars/${user.displayName}.jpeg`}
-                      alt={`${user.displayName} profile picture`}
+                      onError={(e) => {
+                        e.target.src = "/images/avatars/default.jpeg";
+                      }}
+                      alt={""}
                     />
                   </Link>
                 </div>
