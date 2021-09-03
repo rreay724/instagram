@@ -9,7 +9,9 @@ export default function FollowerPopUp({ visible, closeWindow, followers }) {
       const followerList = await getFollowers(followers);
       await setFollowersList(followerList);
     };
-    getFollowerList();
+    if (followers) {
+      getFollowerList();
+    }
   }, [followers]);
 
   console.log(followersList);
@@ -26,13 +28,15 @@ export default function FollowerPopUp({ visible, closeWindow, followers }) {
           onClick={closeWindow}
         />
       </div>
-      {followersList.map((follower) => (
-        <FollowerRow
-          following={true}
-          username={follower?.username}
-          fullName={follower?.fullName}
-        />
-      ))}
+      {followersList
+        ? followersList.map((follower) => (
+            <FollowerRow
+              following={true}
+              username={follower?.username}
+              fullName={follower?.fullName}
+            />
+          ))
+        : null}
     </div>
   );
 }
