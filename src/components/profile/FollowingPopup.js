@@ -3,7 +3,7 @@ import FollowerRow from "./FollowerRow";
 import { getFollowers } from "../../services/firebase";
 // import useFollowers from "../../hooks/use-followers";
 
-export default function Following({ visible, closeWindow, following }) {
+export default function FollowingPopUp({ visible, closeWindow, following }) {
   const [followingList, setFollowingList] = useState([]);
   useEffect(() => {
     const getFollowingList = async () => {

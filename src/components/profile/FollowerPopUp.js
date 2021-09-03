@@ -35,6 +35,7 @@ export default function FollowerPopUp({ visible, closeWindow, followers }) {
             username={follower?.username}
             fullName={follower?.fullName}
             userId={follower?.userId}
+            visible={visible}
           />
         ))
       ) : (

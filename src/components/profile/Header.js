@@ -64,6 +64,8 @@ export default function Header({
 
   useEffect(() => {
     // console.log(user);
+    setVisible("invisible");
+    setFollowingVisible("invisible");
     const isLoggedInUserFollowingProfile = async () => {
       const isFollowing = await isUserFollowingProfile(
         user.username,
