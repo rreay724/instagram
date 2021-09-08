@@ -5,6 +5,7 @@ import useUser from "../../hooks/use-user";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 import FollowerPopUp from "./FollowerPopUp";
 import FollowingPopUp from "./FollowingPopup";
+import UploadPhotoPopup from "../UploadPhotoPopup";
 
 export default function Header({
   photosCount,
@@ -21,8 +22,10 @@ export default function Header({
 }) {
   const { user } = useUser();
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
+  const [closeProfileWindow, setProfileCloseWindow] = useState("hidden");
   const [visible, setVisible] = useState("invisible");
   const [followingVisible, setFollowingVisible] = useState("invisible");
+  const [profileVisibility, setProfileVisibility] = useState(false);
   const activeButtonFollow = user.username && user.username !== profileUsername;
   const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
@@ -36,6 +39,14 @@ export default function Header({
       profileUserId,
       user.userId
     );
+  };
+
+  const handleProfilePicClick = () => {
+    if (profileVisibility === false) {
+      setProfileVisibility(true);
+    } else if (profileVisibility === true) {
+      setProfileVisibility(false);
+    }
   };
 
   const handleClick = () => {
@@ -83,7 +94,8 @@ export default function Header({
       <div className="container justify-center">
         {user.username && (
           <img
-            className="rounded-full h-40 w-40 flex"
+            onClick={handleProfilePicClick}
+            className="rounded-full h-40 w-40 flex cursor-pointer"
             src={`/images/avatars/${profileUsername}.jpeg`}
             onError={(e) => {
               e.target.src = "/images/avatars/default.jpeg";
@@ -92,6 +104,13 @@ export default function Header({
           />
         )}
       </div>
+      {profileVisibility && closeProfileWindow === "hidden" ? (
+        <UploadPhotoPopup
+          profileVisibility={profileVisibility}
+          handleCancelClick={handleProfilePicClick}
+        />
+      ) : null}
+
       <div className="flex items-center justify-center flex-col col-span-2">
         <div className="container flex items-center">
           <p className="text-2xl mr-4">{profileUsername}</p>
