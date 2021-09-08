@@ -5,6 +5,7 @@ import useUser from "../../hooks/use-user";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 import FollowerPopUp from "./FollowerPopUp";
 import FollowingPopUp from "./FollowingPopup";
+import UploadPhotoPopup from "../UploadPhotoPopup";
 
 export default function Header({
   photosCount,
@@ -21,8 +22,10 @@ export default function Header({
 }) {
   const { user } = useUser();
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-  const [visible, setVisible] = useState("invisible");
-  const [followingVisible, setFollowingVisible] = useState("invisible");
+  // const [visible, setVisible] = useState(false);
+  const [followerVisible, setFollowerVisible] = useState(false);
+  const [followingVisible, setFollowingVisible] = useState(false);
+  const [profileVisibility, setProfileVisibility] = useState(false);
   const activeButtonFollow = user.username && user.username !== profileUsername;
   const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
@@ -38,34 +41,37 @@ export default function Header({
     );
   };
 
-  const handleClick = () => {
-    if (visible === "invisible") {
-      setVisible("visible");
+  const handleProfilePicClick = () => {
+    if (profileVisibility === false) {
+      setProfileVisibility(true);
+    } else if (profileVisibility === true) {
+      setProfileVisibility(false);
+    }
+
+    setFollowingVisible(false);
+    setFollowerVisible(false);
+  };
+
+  const handleClickFollower = () => {
+    if (followerVisible === false) {
+      setFollowerVisible(true);
+    } else if (followerVisible === true) {
+      setFollowerVisible(false);
     }
   };
 
   const handleClickFollowing = () => {
-    if (followingVisible === "invisible") {
-      setFollowingVisible("visible");
-    }
-  };
-
-  const closeWindow = () => {
-    if (visible === "visible") {
-      setVisible("invisible");
-    }
-  };
-
-  const closeWindowFollowing = () => {
-    if (followingVisible === "visible") {
-      setFollowingVisible("invisible");
+    if (followingVisible === false) {
+      setFollowingVisible(true);
+    } else if (followingVisible === true) {
+      setFollowingVisible(false);
     }
   };
 
   useEffect(() => {
     // console.log(user);
-    setVisible("invisible");
-    setFollowingVisible("invisible");
+    setFollowerVisible(false);
+    setFollowingVisible(false);
     const isLoggedInUserFollowingProfile = async () => {
       const isFollowing = await isUserFollowingProfile(
         user.username,
@@ -83,7 +89,8 @@ export default function Header({
       <div className="container justify-center">
         {user.username && (
           <img
-            className="rounded-full h-40 w-40 flex"
+            onClick={handleProfilePicClick}
+            className="rounded-full h-40 w-40 flex cursor-pointer"
             src={`/images/avatars/${profileUsername}.jpeg`}
             onError={(e) => {
               e.target.src = "/images/avatars/default.jpeg";
@@ -92,6 +99,13 @@ export default function Header({
           />
         )}
       </div>
+      {profileVisibility ? (
+        <UploadPhotoPopup
+          profileVisibility={profileVisibility}
+          handleCancelClick={handleProfilePicClick}
+        />
+      ) : null}
+
       <div className="flex items-center justify-center flex-col col-span-2">
         <div className="container flex items-center">
           <p className="text-2xl mr-4">{profileUsername}</p>
@@ -121,37 +135,39 @@ export default function Header({
               </p>
               <div
                 className={`mr-10 ${
-                  visible === "invisible" ? "cursor-pointer" : null
+                  followerVisible === false ? "cursor-pointer" : null
                 }`}
-                onClick={followingVisible === "invisible" ? handleClick : null}
+                onClick={
+                  followingVisible === false ? handleClickFollower : null
+                }
               >
-                {visible ? (
-                  <FollowerPopUp
-                    closeWindow={closeWindow}
-                    visible={visible}
-                    followers={followers}
-                  />
-                ) : null}
                 <span className="font-bold">{followerCount}</span>
                 {` `}
                 {followerCount === 1 ? "follower" : "followers"}
               </div>
+              {followerVisible && (
+                <FollowerPopUp
+                  closeWindow={handleClickFollower}
+                  followerVisibility={followerVisible}
+                  followers={followers}
+                />
+              )}
               <div
                 className={`mr-10 ${
-                  followingVisible === "invisible" ? "cursor-pointer" : null
+                  followingVisible === false ? "cursor-pointer" : null
                 }`}
                 onClick={handleClickFollowing}
               >
-                {visible ? (
-                  <FollowingPopUp
-                    closeWindow={closeWindowFollowing}
-                    visible={followingVisible}
-                    following={following}
-                  />
-                ) : null}
                 <span className="font-bold">{following.length}</span>
                 {` `}following
               </div>
+              {followingVisible ? (
+                <FollowingPopUp
+                  closeWindow={handleClickFollowing}
+                  followingVisibility={followingVisible}
+                  following={following}
+                />
+              ) : null}
             </>
           )}
         </div>
