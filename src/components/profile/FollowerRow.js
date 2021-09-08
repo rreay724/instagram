@@ -8,6 +8,9 @@ export default function FollowerRow({ fullName, username, following }) {
         <img
           className="rounded-full h-8 w-8 mt-1 cursor-pointer"
           src={`/images/avatars/${username}.jpeg`}
+          onError={(e) => {
+            e.target.src = "/images/avatars/default.jpeg";
+          }}
         />
       </Link>
 
