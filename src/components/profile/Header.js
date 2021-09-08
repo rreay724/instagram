@@ -80,12 +80,15 @@ export default function Header({
   }, [user.username, profileUserId]);
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
-      <div className="container flex justify-center">
+      <div className="container justify-center">
         {user.username && (
           <img
             className="rounded-full h-40 w-40 flex"
-            alt={`${user.username} profile picture`}
             src={`/images/avatars/${profileUsername}.jpeg`}
+            onError={(e) => {
+              e.target.src = "/images/avatars/default.jpeg";
+            }}
+            alt={""}
           />
         )}
       </div>
@@ -116,7 +119,7 @@ export default function Header({
                 <span className="font-bold">{photosCount}</span>
                 {` `}photos
               </p>
-              <p
+              <div
                 className={`mr-10 ${
                   visible === "invisible" ? "cursor-pointer" : null
                 }`}
@@ -132,8 +135,8 @@ export default function Header({
                 <span className="font-bold">{followerCount}</span>
                 {` `}
                 {followerCount === 1 ? "follower" : "followers"}
-              </p>
-              <p
+              </div>
+              <div
                 className={`mr-10 ${
                   followingVisible === "invisible" ? "cursor-pointer" : null
                 }`}
@@ -148,7 +151,7 @@ export default function Header({
                 ) : null}
                 <span className="font-bold">{following.length}</span>
                 {` `}following
-              </p>
+              </div>
             </>
           )}
         </div>

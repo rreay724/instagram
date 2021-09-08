@@ -16,6 +16,9 @@ const User = ({ username, fullName }) =>
           className="rounded-full flex mr-3 w-16"
           alt=""
           src={`/images/avatars/${username}.jpeg`}
+          onError={(e) => {
+            e.target.src = "/images/avatars/default.jpeg";
+          }}
         />
       </div>
       <div className="col-span-3">

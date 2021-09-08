@@ -27,7 +27,10 @@ export default function SuggestedProfile({
         <img
           className="rounded-full w-8 flex mr-3"
           src={`/images/avatars/${username}.jpeg`}
-          alt=""
+          onError={(e) => {
+            e.target.src = "/images/avatars/default.jpeg";
+          }}
+          alt={""}
         />
         <Link to={`/p/${username}`}>
           <p className="font-bold text-sm">{username}</p>

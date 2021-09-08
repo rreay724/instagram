@@ -39,6 +39,7 @@ function SignUp() {
           emailAddress: emailAddress.toLowerCase(),
           following: [],
           dateCreated: Date.now(),
+          followers: [],
         });
 
         history.push(ROUTES.DASHBOARD);
@@ -59,7 +60,7 @@ function SignUp() {
 
   return (
     <div className="container flex mx-auto max-w-screen-md items-center h-screen">
-      <div className="sm:flex w-3/5 hidden">
+      <div className="sm:flex w-3/5 ">
         <img
           src="/images/iphone-with-profile.jpeg"
           alt="iPhone"
