@@ -22,6 +22,7 @@ export default function UploadPhotoPopup({
                   <input
                     type="file"
                     className="hidden"
+                    accept="image/*"
                     onFileChange={onFileChange}
                   />
                   <a>Upload Photo</a>
