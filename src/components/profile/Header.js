@@ -6,6 +6,7 @@ import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 import FollowerPopUp from "./FollowerPopUp";
 import FollowingPopUp from "./FollowingPopup";
 import UploadPhotoPopup from "../UploadPhotoPopup";
+import { firebase } from "../../lib/firebase";
 
 export default function Header({
   photosCount,
@@ -41,6 +42,10 @@ export default function Header({
     );
   };
 
+  // ====== upload profile pic =====
+
+  // ===================================
+
   const handleProfilePicClick = () => {
     if (profileVisibility === false) {
       setProfileVisibility(true);
@@ -69,6 +74,8 @@ export default function Header({
   };
 
   useEffect(() => {
+    // get profile picture
+
     // console.log(user);
     setFollowerVisible(false);
     setFollowingVisible(false);

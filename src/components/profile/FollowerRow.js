@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
+import useUser from "../../hooks/use-user";
 
 export default function FollowerRow({ fullName, username, following }) {
   return (
