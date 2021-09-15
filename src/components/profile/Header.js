@@ -6,6 +6,7 @@ import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 import FollowerPopUp from "./FollowerPopUp";
 import FollowingPopUp from "./FollowingPopup";
 import UploadPhotoPopup from "../UploadPhotoPopup";
+import { storage } from "../../lib/firebaseFunctions";
 
 export default function Header({
   photosCount,
@@ -21,9 +22,9 @@ export default function Header({
   },
 }) {
   const [file, setFile] = useState(null);
+  const [image, setImage] = useState("");
   const { user } = useUser();
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-  // const [visible, setVisible] = useState(false);
   const [followerVisible, setFollowerVisible] = useState(false);
   const [followingVisible, setFollowingVisible] = useState(false);
   const [profileVisibility, setProfileVisibility] = useState(false);
@@ -44,8 +45,13 @@ export default function Header({
 
   // ====== upload profile pic =====
   const onFileChange = (e) => {
-    setFile(e.target.files[0]);
-    console.log(file);
+    setImage(e.target.files[0]);
+  };
+
+  const onUpload = () => {
+    if (image == null) return;
+    storage.ref(`${profileUserId}/${image.name}`).put(image);
+    // .on("state_changed", alert("success", alert));
   };
 
   // ===================================
@@ -114,6 +120,7 @@ export default function Header({
         <UploadPhotoPopup
           profileVisibility={profileVisibility}
           handleCancelClick={handleProfilePicClick}
+          handleUploadClick={onUpload}
           onFileChange={onFileChange}
         />
       ) : null}
