@@ -45,14 +45,21 @@ export default function Header({
 
   // ====== upload profile pic =====
   const onFileChange = (e) => {
-    setImage(e.target.files[0]);
+    // setImage(e.target.files[0]);
+    storage
+      .ref(`${profileUserId}/${e.target.files[0].name}`)
+      .put(e.target.files[0])
+      .then(setProfileVisibility(false));
   };
 
-  const onUpload = () => {
-    if (image == null) return;
-    storage.ref(`${profileUserId}/${image.name}`).put(image);
-    // .on("state_changed", alert("success", alert));
-  };
+  // const onUpload = () => {
+  //   if (image == null) {
+  //     return;
+  //   } else {
+  //     storage.ref(`${profileUserId}/${image.name}`).put(image);
+  //     // setProfileVisibility(false);
+  //   }
+  // };
 
   // ===================================
 
@@ -84,9 +91,6 @@ export default function Header({
   };
 
   useEffect(() => {
-    // get profile picture
-
-    // console.log(user);
     setFollowerVisible(false);
     setFollowingVisible(false);
     const isLoggedInUserFollowingProfile = async () => {
@@ -99,8 +103,8 @@ export default function Header({
     if (user.username && profileUserId) {
       isLoggedInUserFollowingProfile();
     }
-    // console.log("followers", followers);
   }, [user.username, profileUserId]);
+
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
       <div className="container justify-center">
@@ -120,7 +124,7 @@ export default function Header({
         <UploadPhotoPopup
           profileVisibility={profileVisibility}
           handleCancelClick={handleProfilePicClick}
-          handleUploadClick={onUpload}
+          // handleUploadClick={onUpload}
           onFileChange={onFileChange}
         />
       ) : null}
