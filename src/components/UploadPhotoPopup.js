@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { storage } from "../lib/firebaseFunctions";
+import React from "react";
 
 export default function UploadPhotoPopup({
   profileVisibility,
-  // handleUploadClick,
   handleCancelClick,
   onFileChange,
 }) {

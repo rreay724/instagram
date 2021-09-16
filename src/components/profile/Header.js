@@ -45,21 +45,11 @@ export default function Header({
 
   // ====== upload profile pic =====
   const onFileChange = (e) => {
-    // setImage(e.target.files[0]);
     storage
       .ref(`${profileUserId}/${e.target.files[0].name}`)
       .put(e.target.files[0])
       .then(setProfileVisibility(false));
   };
-
-  // const onUpload = () => {
-  //   if (image == null) {
-  //     return;
-  //   } else {
-  //     storage.ref(`${profileUserId}/${image.name}`).put(image);
-  //     // setProfileVisibility(false);
-  //   }
-  // };
 
   // ===================================
 
@@ -124,7 +114,6 @@ export default function Header({
         <UploadPhotoPopup
           profileVisibility={profileVisibility}
           handleCancelClick={handleProfilePicClick}
-          // handleUploadClick={onUpload}
           onFileChange={onFileChange}
         />
       ) : null}
