@@ -62,6 +62,7 @@ export default function Header({
 
   // ===================================
 
+  // handles photo upload pop up when clicking on profile pic
   const handleProfilePicClick = () => {
     if (profileVisibility === false) {
       setProfileVisibility(true);
@@ -73,6 +74,7 @@ export default function Header({
     setFollowerVisible(false);
   };
 
+  // handles popup window when clicking on followers
   const handleClickFollower = () => {
     if (followerVisible === false) {
       setFollowerVisible(true);
@@ -81,6 +83,7 @@ export default function Header({
     }
   };
 
+  // handles popup window when clicking on following
   const handleClickFollowing = () => {
     if (followingVisible === false) {
       setFollowingVisible(true);
@@ -109,8 +112,12 @@ export default function Header({
       <div className="container justify-center">
         {user.username && (
           <img
-            onClick={handleProfilePicClick}
-            className="rounded-full h-40 w-40 flex cursor-pointer"
+            onClick={
+              profileUserId == user.userId ? handleProfilePicClick : null
+            }
+            className={`rounded-full h-40 w-40 flex ${
+              profileUserId == user.userId ? "cursor-pointer" : null
+            }`}
             src={`/images/avatars/${profileUsername}.jpeg`}
             onError={(e) => {
               e.target.src = "/images/avatars/default.jpeg";
