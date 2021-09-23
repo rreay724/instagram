@@ -6,7 +6,7 @@ import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 import FollowerPopUp from "./FollowerPopUp";
 import FollowingPopUp from "./FollowingPopup";
 import UploadPhotoPopup from "../UploadPhotoPopup";
-import { storage } from "../../lib/firebaseFunctions";
+import { firebase } from "../../lib/firebase";
 
 export default function Header({
   photosCount,
@@ -21,8 +21,9 @@ export default function Header({
     username: profileUsername,
   },
 }) {
-  const [file, setFile] = useState(null);
-  const [image, setImage] = useState("");
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+  const [imageUrl, setImageUrl] = useState("");
   const { user } = useUser();
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
   const [followerVisible, setFollowerVisible] = useState(false);
@@ -44,10 +45,18 @@ export default function Header({
   };
 
   // ====== upload profile pic =====
-  const onFileChange = (e) => {
-    storage
-      .ref(`${profileUserId}/${e.target.files[0].name}`)
-      .put(e.target.files[0])
+  const onFileChange = async (e) => {
+    const storageRef = storage.ref(
+      `${profileUserId}/${e.target.files[0].name}`
+    );
+    await storageRef.put(e.target.files[0]);
+    db.collection("profilePics")
+      .doc(e.target.files[0].name)
+      .set({
+        imageName: e.target.files[0].name,
+        url: await storageRef.getDownloadURL(),
+        userId: profileUserId,
+      })
       .then(setProfileVisibility(false));
   };
 
