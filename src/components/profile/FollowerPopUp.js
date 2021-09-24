@@ -71,7 +71,7 @@ export default function FollowerPopUp({
                   />
                 ))
               ) : (
-                <p className="ml-16 p-5">No followers</p>
+                <p className="p-5 mx-auto">No followers</p>
               )}
             </div>
           </div>

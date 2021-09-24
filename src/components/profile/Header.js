@@ -6,6 +6,7 @@ import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 import FollowerPopUp from "./FollowerPopUp";
 import FollowingPopUp from "./FollowingPopup";
 import UploadPhotoPopup from "../UploadPhotoPopup";
+import { firebase } from "../../lib/firebase";
 
 export default function Header({
   photosCount,
@@ -20,9 +21,11 @@ export default function Header({
     username: profileUsername,
   },
 }) {
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+  const [imageUrl, setImageUrl] = useState("");
   const { user } = useUser();
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-  // const [visible, setVisible] = useState(false);
   const [followerVisible, setFollowerVisible] = useState(false);
   const [followingVisible, setFollowingVisible] = useState(false);
   const [profileVisibility, setProfileVisibility] = useState(false);
@@ -41,6 +44,25 @@ export default function Header({
     );
   };
 
+  // ====== upload profile pic =====
+  const onFileChange = async (e) => {
+    const storageRef = storage.ref(
+      `${profileUserId}/${e.target.files[0].name}`
+    );
+    await storageRef.put(e.target.files[0]);
+    db.collection("profilePics")
+      .doc(e.target.files[0].name)
+      .set({
+        imageName: e.target.files[0].name,
+        url: await storageRef.getDownloadURL(),
+        userId: profileUserId,
+      })
+      .then(setProfileVisibility(false));
+  };
+
+  // ===================================
+
+  // handles photo upload pop up when clicking on profile pic
   const handleProfilePicClick = () => {
     if (profileVisibility === false) {
       setProfileVisibility(true);
@@ -52,6 +74,7 @@ export default function Header({
     setFollowerVisible(false);
   };
 
+  // handles popup window when clicking on followers
   const handleClickFollower = () => {
     if (followerVisible === false) {
       setFollowerVisible(true);
@@ -60,6 +83,7 @@ export default function Header({
     }
   };
 
+  // handles popup window when clicking on following
   const handleClickFollowing = () => {
     if (followingVisible === false) {
       setFollowingVisible(true);
@@ -69,7 +93,6 @@ export default function Header({
   };
 
   useEffect(() => {
-    // console.log(user);
     setFollowerVisible(false);
     setFollowingVisible(false);
     const isLoggedInUserFollowingProfile = async () => {
@@ -82,15 +105,19 @@ export default function Header({
     if (user.username && profileUserId) {
       isLoggedInUserFollowingProfile();
     }
-    // console.log("followers", followers);
   }, [user.username, profileUserId]);
+
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
       <div className="container justify-center">
         {user.username && (
           <img
-            onClick={handleProfilePicClick}
-            className="rounded-full h-40 w-40 flex cursor-pointer"
+            onClick={
+              profileUserId == user.userId ? handleProfilePicClick : null
+            }
+            className={`rounded-full h-40 w-40 flex ${
+              profileUserId == user.userId ? "cursor-pointer" : null
+            }`}
             src={`/images/avatars/${profileUsername}.jpeg`}
             onError={(e) => {
               e.target.src = "/images/avatars/default.jpeg";
@@ -103,6 +130,7 @@ export default function Header({
         <UploadPhotoPopup
           profileVisibility={profileVisibility}
           handleCancelClick={handleProfilePicClick}
+          onFileChange={onFileChange}
         />
       ) : null}
 
