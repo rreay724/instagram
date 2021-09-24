@@ -26,8 +26,6 @@ export default function Header({
     username: profileUsername,
   },
 }) {
-  const db = firebase.firestore();
-  const storage = firebase.storage();
   const [imageUrl, setImageUrl] = useState("");
   const { user } = useUser();
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
@@ -35,6 +33,7 @@ export default function Header({
   const [followingVisible, setFollowingVisible] = useState(false);
   const [profileVisibility, setProfileVisibility] = useState(false);
   const activeButtonFollow = user.username && user.username !== profileUsername;
+
   const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
     setFollowerCount({
@@ -100,17 +99,9 @@ export default function Header({
       isLoggedInUserFollowingProfile();
     }
 
-    // const getFollowerList = async () => {
-    //   const followerList = await getFollowers(followers);
-    //   await setFollowersList(followerList);
-    // };
-    // if (followers) {
-    //   getFollowerList();
-    // }
-
     const getUrl = async () => {
       const photo = await getUserPhotosByUserId(profileUserId);
-      await setImageUrl(photo[0].url);
+      await setImageUrl(photo[0]?.url);
     };
 
     if (profileUserId) {
@@ -130,7 +121,7 @@ export default function Header({
             className={`rounded-full h-40 w-40 flex ${
               profileUserId == user.userId ? "cursor-pointer" : null
             }`}
-            src={imageUrl}
+            src={`${imageUrl} ? ${imageUrl} : /images/avatars/default.jpeg`}
             onError={(e) => {
               e.target.src = "/images/avatars/default.jpeg";
             }}
