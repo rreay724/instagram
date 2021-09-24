@@ -186,3 +186,57 @@ export async function toggleFollow(
     isFollowingProfile
   );
 }
+
+export async function uploadProfilePhoto({
+  e,
+  profileUserId,
+  setProfileVisibility,
+}) {
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+  const storageRef = storage.ref(`${profileUserId}/${e.target.files[0].name}`);
+  await storageRef.put(e.target.files[0]);
+  db.collection("profilePics")
+    .doc(profileUserId)
+    .set({
+      imageName: e.target.files[0].name,
+      url: await storageRef.getDownloadURL(),
+      userId: profileUserId,
+    })
+    .then(setProfileVisibility(false));
+}
+
+export async function getUserPhotosByUserId(profileUserId) {
+  const result = await firebase
+    .firestore()
+    .collection("profilePics")
+    .where("userId", "==", profileUserId)
+    .get();
+
+  const profilePic = await Promise.all(
+    result.docs.map(async (item) => ({
+      ...item.data(),
+      docId: item.id,
+    }))
+  );
+
+  return profilePic;
+}
+
+// export async function getFollowers(followerIds) {
+//   if (followerIds.length > 0) {
+//     const result = await firebase
+//       .firestore()
+//       .collection("users")
+//       .where("userId", "in", followerIds)
+//       .get();
+
+//     const followers = await Promise.all(
+//       await result.docs.map(async (item) => ({
+//         ...item.data(),
+//         docId: item.id,
+//       }))
+//     );
+//     return followers;
+//   }
+// }

@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import useUser from "../../hooks/use-user";
-import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
+import {
+  isUserFollowingProfile,
+  toggleFollow,
+  uploadProfilePhoto,
+  getUserPhotosByUserId,
+} from "../../services/firebase";
 import FollowerPopUp from "./FollowerPopUp";
 import FollowingPopUp from "./FollowingPopup";
 import UploadPhotoPopup from "../UploadPhotoPopup";
@@ -45,19 +50,8 @@ export default function Header({
   };
 
   // ====== upload profile pic =====
-  const onFileChange = async (e) => {
-    const storageRef = storage.ref(
-      `${profileUserId}/${e.target.files[0].name}`
-    );
-    await storageRef.put(e.target.files[0]);
-    db.collection("profilePics")
-      .doc(e.target.files[0].name)
-      .set({
-        imageName: e.target.files[0].name,
-        url: await storageRef.getDownloadURL(),
-        userId: profileUserId,
-      })
-      .then(setProfileVisibility(false));
+  const onFileChange = (e) => {
+    uploadProfilePhoto({ e, profileUserId, setProfileVisibility });
   };
 
   // ===================================
@@ -105,7 +99,25 @@ export default function Header({
     if (user.username && profileUserId) {
       isLoggedInUserFollowingProfile();
     }
-  }, [user.username, profileUserId]);
+
+    // const getFollowerList = async () => {
+    //   const followerList = await getFollowers(followers);
+    //   await setFollowersList(followerList);
+    // };
+    // if (followers) {
+    //   getFollowerList();
+    // }
+
+    const getUrl = async () => {
+      const photo = await getUserPhotosByUserId(profileUserId);
+      await setImageUrl(photo[0].url);
+    };
+
+    if (profileUserId) {
+      getUrl();
+      console.log(imageUrl);
+    }
+  }, [user.username, profileUserId, imageUrl]);
 
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
@@ -118,7 +130,7 @@ export default function Header({
             className={`rounded-full h-40 w-40 flex ${
               profileUserId == user.userId ? "cursor-pointer" : null
             }`}
-            src={`/images/avatars/${profileUsername}.jpeg`}
+            src={imageUrl}
             onError={(e) => {
               e.target.src = "/images/avatars/default.jpeg";
             }}
