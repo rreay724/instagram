@@ -222,21 +222,3 @@ export async function getUserPhotosByUserId(profileUserId) {
 
   return profilePic;
 }
-
-// export async function getFollowers(followerIds) {
-//   if (followerIds.length > 0) {
-//     const result = await firebase
-//       .firestore()
-//       .collection("users")
-//       .where("userId", "in", followerIds)
-//       .get();
-
-//     const followers = await Promise.all(
-//       await result.docs.map(async (item) => ({
-//         ...item.data(),
-//         docId: item.id,
-//       }))
-//     );
-//     return followers;
-//   }
-// }

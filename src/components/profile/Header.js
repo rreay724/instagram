@@ -11,7 +11,6 @@ import {
 import FollowerPopUp from "./FollowerPopUp";
 import FollowingPopUp from "./FollowingPopup";
 import UploadPhotoPopup from "../UploadPhotoPopup";
-import { firebase } from "../../lib/firebase";
 
 export default function Header({
   photosCount,
@@ -86,6 +85,15 @@ export default function Header({
   };
 
   useEffect(() => {
+    const getUrl = async () => {
+      const photo = await getUserPhotosByUserId(profileUserId);
+      setImageUrl(photo[0]?.url);
+    };
+
+    if (profileUserId) {
+      getUrl();
+    }
+
     setFollowerVisible(false);
     setFollowingVisible(false);
     const isLoggedInUserFollowingProfile = async () => {
@@ -97,16 +105,6 @@ export default function Header({
     };
     if (user.username && profileUserId) {
       isLoggedInUserFollowingProfile();
-    }
-
-    const getUrl = async () => {
-      const photo = await getUserPhotosByUserId(profileUserId);
-      await setImageUrl(photo[0]?.url);
-    };
-
-    if (profileUserId) {
-      getUrl();
-      console.log(imageUrl);
     }
   }, [user.username, profileUserId, imageUrl]);
 

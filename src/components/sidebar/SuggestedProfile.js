@@ -1,9 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
   updateLoggedInUserFollowing,
   updateFollowedUserFollowers,
+  getUserPhotosByUserId,
 } from "../../services/firebase";
 
 export default function SuggestedProfile({
@@ -14,6 +15,7 @@ export default function SuggestedProfile({
   loggedInUserDocId,
 }) {
   const [followed, setFollowed] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   async function handleFollowUser() {
     setFollowed(true);
@@ -21,12 +23,23 @@ export default function SuggestedProfile({
     await updateFollowedUserFollowers(suggestedProfileDocId, userId, false);
   }
 
+  useEffect(() => {
+    const getUrl = async () => {
+      const photo = await getUserPhotosByUserId(profileId);
+      await setImageUrl(photo[0]?.url);
+    };
+
+    if (profileId) {
+      getUrl();
+    }
+  }, [imageUrl]);
+
   return !followed ? (
     <div className="flex flex-row items-center align-items justify-between">
-      <div className="flex items-center ustify-between">
+      <div className="flex items-center justify-between">
         <img
-          className="rounded-full w-8 flex mr-3"
-          src={`/images/avatars/${username}.jpeg`}
+          className="rounded-full w-8 h-8 flex mr-3"
+          src={`${imageUrl} ? ${imageUrl} : /images/avatars/default.jpeg`}
           onError={(e) => {
             e.target.src = "/images/avatars/default.jpeg";
           }}
