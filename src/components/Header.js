@@ -1,13 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import FirebaseContext from "../context/firebase";
 import Usercontext from "../context/user";
+import { getUserPhotosByUserId } from "../services/firebase";
 import * as ROUTES from "../constants/routes";
 
 function Header() {
   const { firebase } = useContext(FirebaseContext);
   const { user } = useContext(Usercontext);
   const history = useHistory();
+
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    const getUrl = async () => {
+      const photo = await getUserPhotosByUserId(user.uid);
+      await setImageUrl(photo[0]?.url);
+    };
+
+    if (user.uid) {
+      getUrl();
+    }
+  }, [user.uid, imageUrl]);
 
   return (
     <header className="h-16 bg-white border-b border-gray-primary mb-8">
@@ -77,7 +91,7 @@ function Header() {
                   <Link to={`/p/${user.displayName}`}>
                     <img
                       className="rounded-full h-8 w-8 flex"
-                      src={`/images/avatars/${user.displayName}.jpeg`}
+                      src={`${imageUrl} ? ${imageUrl} : /images/avatars/default.jpeg`}
                       onError={(e) => {
                         e.target.src = "/images/avatars/default.jpeg";
                       }}

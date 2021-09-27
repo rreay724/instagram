@@ -27,3 +27,5 @@ export default function usePhotos() {
 
   return { photos };
 }
+
+export function getProfilePic() {}
