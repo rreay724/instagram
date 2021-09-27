@@ -21,32 +21,6 @@ export default function FollowerPopUp({
 
   return (
     <>
-      {/* {followerVisibility ? (
-        <div
-          className={`overflow-auto z-30 mx-auto  m-0 p-0 h-2/6 w-96  border rounded-xl bg-white text-left fixed `}
-        >
-          <div className="flex border-b border-gray-primary w-full h-8 mt-2 px-5 ">
-            <p className="mx-auto font-bold pl-6">Followers</p>
-            <img
-              src="/images/cancel.png"
-              className="cursor-pointer h-5 mt-0.5"
-              onClick={closeWindow}
-            />
-          </div>
-          {followersList ? (
-            followersList.map((follower) => (
-              <FollowerRow
-                key={follower?.userId}
-                following={true}
-                username={follower?.username}
-                fullName={follower?.fullName}
-              />
-            ))
-          ) : (
-            <p className="ml-16 p-5">No followers</p>
-          )}
-        </div>
-      ) : null} */}
       {followerVisibility && (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-opacity-75 bg-black-light">
