@@ -3,6 +3,7 @@ import React from "react";
 export default function UploadPhotoPopup({
   profileVisibility,
   handleCancelClick,
+  handleDeleteClick,
   onFileChange,
 }) {
   return (
@@ -26,7 +27,10 @@ export default function UploadPhotoPopup({
               </div>
               {/*body*/}
               <div className="relative p-1 flex">
-                <p className="my-4 text-blueGray-500 text-sm font-bold leading-relaxed mx-auto  cursor-pointer text-red-primary">
+                <p
+                  className="my-4 text-blueGray-500 text-sm font-bold leading-relaxed mx-auto  cursor-pointer text-red-primary"
+                  onClick={handleDeleteClick}
+                >
                   Remove Current Photo
                 </p>
               </div>

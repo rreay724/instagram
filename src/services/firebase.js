@@ -222,3 +222,12 @@ export async function getUserPhotosByUserId(profileUserId) {
 
   return profilePic;
 }
+
+export async function deleteUserPhotoByUserId(profileUserId) {
+  const result = await firebase
+    .firestore()
+    .collection("profilePics")
+    .doc(profileUserId);
+
+  result.delete();
+}

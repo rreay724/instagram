@@ -7,6 +7,7 @@ import {
   toggleFollow,
   uploadProfilePhoto,
   getUserPhotosByUserId,
+  deleteUserPhotoByUserId,
 } from "../../services/firebase";
 import FollowerPopUp from "./FollowerPopUp";
 import FollowingPopUp from "./FollowingPopup";
@@ -64,6 +65,12 @@ export default function Header({
 
     setFollowingVisible(false);
     setFollowerVisible(false);
+  };
+
+  // handles deleting profile pic
+  const handleProfilePicDelete = () => {
+    deleteUserPhotoByUserId(profileUserId);
+    setProfileVisibility(false);
   };
 
   // handles popup window when clicking on followers
@@ -132,6 +139,7 @@ export default function Header({
           profileVisibility={profileVisibility}
           handleCancelClick={handleProfilePicClick}
           onFileChange={onFileChange}
+          handleDeleteClick={handleProfilePicDelete}
         />
       ) : null}
 
