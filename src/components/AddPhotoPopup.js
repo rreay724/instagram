@@ -67,8 +67,8 @@ export default function AddPhotoPopup({
                 />
 
                 <div className="m-10">
-                  <label class="w-48 px-4 py-3 bg-blue-light font-bold text-sm rounded-lg text-white  tracking-wide  border border-blue cursor-pointer  ">
-                    <span class="text-base leading-normal">
+                  <label className="w-48 px-4 py-3 bg-blue-light font-bold text-sm rounded-lg text-white  tracking-wide  border border-blue cursor-pointer  ">
+                    <span className="text-base leading-normal">
                       Select file from computer
                     </span>
                     <input
