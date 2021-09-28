@@ -206,6 +206,29 @@ export async function uploadProfilePhoto({
     .then(setProfileVisibility(false));
 }
 
+export async function addPhoto({
+  image,
+  profileUserId,
+  setAddPhotoVisibility,
+  caption,
+  date,
+}) {
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+  const storageRef = storage.ref(`uploadedPics/${image.name}`);
+  db.collection("photos")
+    .doc()
+    .set({
+      caption: caption,
+      comments: [""],
+      imageSrc: await storageRef.getDownloadURL(),
+      dateCreated: date,
+      likes: [""],
+      userId: profileUserId,
+    })
+    .then(setAddPhotoVisibility(false));
+}
+
 export async function getUserPhotosByUserId(profileUserId) {
   const result = await firebase
     .firestore()

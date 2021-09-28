@@ -4,13 +4,24 @@ import FirebaseContext from "../context/firebase";
 import Usercontext from "../context/user";
 import { getUserPhotosByUserId } from "../services/firebase";
 import * as ROUTES from "../constants/routes";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import AddPhotoPopup from "./AddPhotoPopup";
 
 function Header() {
   const { firebase } = useContext(FirebaseContext);
   const { user } = useContext(Usercontext);
   const history = useHistory();
+  const [addPhotoVisibility, setAddPhotoVisibility] = useState(false);
 
   const [imageUrl, setImageUrl] = useState("");
+
+  const handleAddPhotoClick = () => {
+    if (addPhotoVisibility === false) {
+      setAddPhotoVisibility(true);
+    } else if (addPhotoVisibility === true) {
+      setAddPhotoVisibility(false);
+    }
+  };
 
   useEffect(() => {
     const getUrl = async () => {
@@ -57,6 +68,14 @@ function Header() {
                     />
                   </svg>
                 </Link>
+                <button className="pr-4" onClick={handleAddPhotoClick}>
+                  <AddBoxOutlinedIcon />
+                </button>
+                <AddPhotoPopup
+                  addPhotoVisibility={addPhotoVisibility}
+                  closeWindow={handleAddPhotoClick}
+                  profileUserId={user.uid}
+                />
                 <button
                   type="button"
                   title="Sign Out"
