@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function AddPhotoPopup({ addPhotoVisibility, closeWindow }) {
-  const placeholder = "";
+  const placeholder = "/placeholder.jpg";
   const [{ alt, src }, setImage] = useState({
     src: placeholder,
     alt: "Upload an Image",
@@ -30,7 +30,11 @@ export default function AddPhotoPopup({ addPhotoVisibility, closeWindow }) {
               />
             </div>
             <div className="mt-10 p-10">
-              <img src={src} alt={alt} className="w-96 h-96" />
+              <img
+                src={src}
+                alt={alt}
+                className="w-auto h-96 mx-auto rounded-lg"
+              />
 
               <div className="m-10">
                 <input type="file" onChange={handleChange} />
@@ -40,6 +44,7 @@ export default function AddPhotoPopup({ addPhotoVisibility, closeWindow }) {
                   type="text"
                   placeholder="Caption"
                   className="w-96 p-2 border-2 border-gray-primary rounded-lg"
+                  required={true}
                 />
               </div>
               <div className="m-10">
