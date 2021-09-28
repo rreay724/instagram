@@ -4,11 +4,14 @@ import FirebaseContext from "../context/firebase";
 import Usercontext from "../context/user";
 import { getUserPhotosByUserId } from "../services/firebase";
 import * as ROUTES from "../constants/routes";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import AddPhotoPopup from "./AddPhotoPopup";
 
 function Header() {
   const { firebase } = useContext(FirebaseContext);
   const { user } = useContext(Usercontext);
   const history = useHistory();
+  const [addPhotoVisibility, setAddPhotoVisibility] = useState(false);
 
   const [imageUrl, setImageUrl] = useState("");
 
@@ -57,6 +60,10 @@ function Header() {
                     />
                   </svg>
                 </Link>
+                <button className="pr-4">
+                  <AddBoxOutlinedIcon />
+                </button>
+                <AddPhotoPopup addPhotoVisibility={addPhotoVisibility} />
                 <button
                   type="button"
                   title="Sign Out"
