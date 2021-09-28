@@ -15,6 +15,14 @@ function Header() {
 
   const [imageUrl, setImageUrl] = useState("");
 
+  const handleAddPhotoClick = () => {
+    if (addPhotoVisibility === false) {
+      setAddPhotoVisibility(true);
+    } else if (addPhotoVisibility === true) {
+      setAddPhotoVisibility(false);
+    }
+  };
+
   useEffect(() => {
     const getUrl = async () => {
       const photo = await getUserPhotosByUserId(user.uid);
@@ -60,10 +68,14 @@ function Header() {
                     />
                   </svg>
                 </Link>
-                <button className="pr-4">
+                <button className="pr-4" onClick={handleAddPhotoClick}>
                   <AddBoxOutlinedIcon />
                 </button>
-                <AddPhotoPopup addPhotoVisibility={addPhotoVisibility} />
+                <AddPhotoPopup
+                  addPhotoVisibility={addPhotoVisibility}
+                  closeWindow={handleAddPhotoClick}
+                  profileUserId={user.uid}
+                />
                 <button
                   type="button"
                   title="Sign Out"
