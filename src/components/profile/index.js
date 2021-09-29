@@ -26,7 +26,8 @@ export default function UserProfile({ user }) {
     if (user.username) {
       getProfileInfoAndPhotos();
     }
-  }, [user.username]);
+  }, []);
+  // }, [user.username]);
 
   return (
     <div>
