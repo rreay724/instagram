@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { addPhoto } from "../services/firebase";
 import { firebase } from "../lib/firebase";
 
 export default function AddPhotoPopup({
@@ -57,6 +56,7 @@ export default function AddPhotoPopup({
                   src="/images/cancel.png"
                   className="cursor-pointer h-5 mt-0.5"
                   onClick={closeWindow}
+                  alt=""
                 />
               </div>
               <div className="mt-10 p-10">

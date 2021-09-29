@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import FollowerRow from "./FollowerRow";
 import { getFollowers } from "../../services/firebase";
-import PropTypes from "prop-types";
 
 export default function FollowerPopUp({
   followerVisibility,
@@ -32,6 +31,7 @@ export default function FollowerPopUp({
                   src="/images/cancel.png"
                   className="cursor-pointer h-5 mt-0.5"
                   onClick={closeWindow}
+                  alt=""
                 />
               </div>
 

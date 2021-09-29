@@ -50,18 +50,15 @@ export async function updateLoggedInUserFollowing(
   profileId, // the user that karl requests to follow
   isFollowingProfile // true/false (am i currently following this person?)
 ) {
-  return (
-    console.log("profileId", profileId),
-    firebase
-      .firestore()
-      .collection("users")
-      .doc(loggedInUserDocId)
-      .update({
-        following: isFollowingProfile
-          ? FieldValue.arrayRemove(profileId)
-          : FieldValue.arrayUnion(profileId),
-      })
-  );
+  return firebase
+    .firestore()
+    .collection("users")
+    .doc(loggedInUserDocId)
+    .update({
+      following: isFollowingProfile
+        ? FieldValue.arrayRemove(profileId)
+        : FieldValue.arrayUnion(profileId),
+    });
 }
 
 export async function updateFollowedUserFollowers(
@@ -204,29 +201,6 @@ export async function uploadProfilePhoto({
       userId: profileUserId,
     })
     .then(setProfileVisibility(false));
-}
-
-export async function addPhoto({
-  image,
-  profileUserId,
-  setAddPhotoVisibility,
-  caption,
-  date,
-}) {
-  const db = firebase.firestore();
-  const storage = firebase.storage();
-  const storageRef = storage.ref(`uploadedPics/${image.name}`);
-  db.collection("photos")
-    .doc()
-    .set({
-      caption: caption,
-      comments: [""],
-      imageSrc: await storageRef.getDownloadURL(),
-      dateCreated: date,
-      likes: [""],
-      userId: profileUserId,
-    })
-    .then(setAddPhotoVisibility(false));
 }
 
 export async function getUserPhotosByUserId(profileUserId) {

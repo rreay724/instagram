@@ -121,10 +121,10 @@ export default function Header({
         {user.username && (
           <img
             onClick={
-              profileUserId == user.userId ? handleProfilePicClick : null
+              profileUserId === user.userId ? handleProfilePicClick : null
             }
             className={`rounded-full h-40 w-40 flex ${
-              profileUserId == user.userId ? "cursor-pointer" : null
+              profileUserId === user.userId ? "cursor-pointer" : null
             }`}
             src={`${imageUrl} ? ${imageUrl} : /images/avatars/default.jpeg`}
             onError={(e) => {

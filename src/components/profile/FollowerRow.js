@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
-import useUser from "../../hooks/use-user";
 
 export default function FollowerRow({ fullName, username, following }) {
   return (
     <div className="flex w-full p-3">
       <Link to={`/p/${username}`}>
         <img
+          alt=""
           className="rounded-full h-8 w-8 mt-1 cursor-pointer"
           src={`/images/avatars/${username}.jpeg`}
           onError={(e) => {

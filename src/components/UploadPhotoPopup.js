@@ -22,7 +22,7 @@ export default function UploadPhotoPopup({
                     accept="image/*"
                     onChange={onFileChange}
                   />
-                  <a>Upload Photo</a>
+                  <p className="cursor-pointer">Upload Photo</p>
                 </label>
               </div>
               {/*body*/}
