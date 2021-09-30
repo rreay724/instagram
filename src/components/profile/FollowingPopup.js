@@ -23,7 +23,7 @@ export default function FollowingPopUp({
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-opacity-75 bg-black-light">
             {/*content*/}
-            <div className="border-0 rounded-lg shadow-lg relative flex flex-col h-96 w-96 bg-white outline-none focus:outline-none">
+            <div className="overflow-scroll border-0 rounded-lg shadow-lg relative flex flex-col h-96 w-96 bg-white outline-none focus:outline-none">
               <div className="flex border-b border-gray-primary w-full h-8 mt-2 px-5 ">
                 <p className="mx-auto font-bold pl-6">Following</p>
                 <img
