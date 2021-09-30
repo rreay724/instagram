@@ -33,7 +33,7 @@ function Login() {
 
   return (
     <div className="container flex mx-auto max-w-screen-md items-center h-screen">
-      <div className=" w-3/5 sm:flex">
+      <div className="w-0 invisible md:w-3/5 md:visible">
         <img
           src="/images/iphone-with-profile.jpeg"
           alt="iPhone"
