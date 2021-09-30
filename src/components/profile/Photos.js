@@ -15,7 +15,7 @@ export default function Photos({ photos }) {
                 <img
                   src={photo.imageSrc}
                   alt={photo.caption}
-                  className="object-cover w-36 h-36 md:h-full md:w-full"
+                  className="object-cover w-36 h-36 md:h-80 md:w-full"
                 />
 
                 <div className="absolute bottom-0 left-0 bg-gray-200 z-10 w-full justify-evenly items-center h-full bg-black-faded group-hover:flex hidden">
