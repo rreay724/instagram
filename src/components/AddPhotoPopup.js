@@ -50,7 +50,7 @@ export default function AddPhotoPopup({
         <>
           <div className="flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 focus:outline-none bg-opacity-75 bg-black-light">
             {/*content*/}
-            <div className="border-0 mx-44 rounded-lg shadow-lg relative h-screen w-screen bg-white  focus:outline-none">
+            <div className="border-0 md:mx-44 rounded-lg shadow-lg relative md:h-screen md:w-screen bg-white  focus:outline-none">
               <div className="border-b border-gray-primary w-full h-8 mt-2 px-5 ">
                 <img
                   src="/images/cancel.png"

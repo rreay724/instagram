@@ -8,7 +8,7 @@ export default function Sidebar() {
   } = useUser();
 
   return (
-    <div className="p-4">
+    <div className="p-4 invisible md:visible">
       <User username={username} fullName={fullName} />
       <Suggestions
         userId={userId}

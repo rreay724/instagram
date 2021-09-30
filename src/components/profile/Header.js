@@ -123,7 +123,7 @@ export default function Header({
             onClick={
               profileUserId === user.userId ? handleProfilePicClick : null
             }
-            className={`rounded-full h-40 w-40 flex ${
+            className={`rounded-full ml-2 md:ml-0 object-cover md:h-40 md:w-40 w-28 h-28 flex ${
               profileUserId === user.userId ? "cursor-pointer" : null
             }`}
             src={`${imageUrl} ? ${imageUrl} : /images/avatars/default.jpeg`}

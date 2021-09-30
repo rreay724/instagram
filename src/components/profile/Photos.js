@@ -3,8 +3,8 @@ import Skeleton from "react-loading-skeleton";
 
 export default function Photos({ photos }) {
   return (
-    <div className="h-16 border-t border-gray-primary mt-12 pt-4 ">
-      <div className="grid grid-cols-3 gap-8 mt-4 mb-12 pb-24">
+    <div className="h-16 border-t border-gray-primary mt-12 pt-4 ml-1 mr-1">
+      <div className="grid grid-cols-3 md:gap-4 gap-1 mt-4 mb-12 pb-12">
         {!photos
           ? new Array(12)
               .fill(0)
@@ -12,7 +12,11 @@ export default function Photos({ photos }) {
           : photos.length > 0
           ? photos.map((photo) => (
               <div key={photo.docId} className="relative group">
-                <img src={photo.imageSrc} alt={photo.caption} />
+                <img
+                  src={photo.imageSrc}
+                  alt={photo.caption}
+                  className="object-cover w-36 h-36 md:h-80 md:w-full"
+                />
 
                 <div className="absolute bottom-0 left-0 bg-gray-200 z-10 w-full justify-evenly items-center h-full bg-black-faded group-hover:flex hidden">
                   <p className="flex items-center text-white font-bold">
