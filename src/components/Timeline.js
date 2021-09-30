@@ -6,7 +6,7 @@ import Post from "../components/post/index";
 function Timeline() {
   const { photos } = usePhotos();
   return (
-    <div className="container col-span-2">
+    <div className="container col-span-4 md:col-span-2">
       {!photos ? (
         <>
           {[...new Array(4)].map((_, index) => (
