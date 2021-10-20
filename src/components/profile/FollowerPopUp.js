@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
 import FollowerRow from "./FollowerRow";
 import { getFollowers } from "../../services/firebase";
+import useUser from "../../hooks/use-user";
 
 export default function FollowerPopUp({
   followerVisibility,
   closeWindow,
   followers,
 }) {
+  const {
+    user: { docId, fullName, username, userId, following },
+  } = useUser();
   const [followersList, setFollowersList] = useState([]);
+
   useEffect(() => {
     const getFollowerList = async () => {
       const followerList = await getFollowers(followers);
