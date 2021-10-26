@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function Photos({ photos }) {
   const [photoVisibility, setPhotoVisibility] = useState(false);
+  const [photoSrc, setPhotoSrc] = useState("");
 
   const handlePicClick = () => {
     if (photoVisibility === false) {
@@ -34,12 +35,15 @@ export default function Photos({ photos }) {
                 <div
                   key={photo.docId}
                   className="relative group cursor-pointer"
-                  onClick={handlePicClick}
+                  onClick={() => {
+                    handlePicClick();
+                    setPhotoSrc(photo.imageSrc);
+                  }}
                 >
                   <img
                     src={photo.imageSrc}
                     alt={photo.caption}
-                    className="object-cover w-36 h-36 md:h-80 md:w-full"
+                    className="object-cover w-36 h-36 md:h-80 md:w-full z-40"
                   />
 
                   <div className="absolute bottom-0 left-0 bg-gray-200 z-10 w-full justify-evenly items-center h-full bg-black-faded group-hover:flex hidden">
@@ -79,7 +83,7 @@ export default function Photos({ photos }) {
                     <PhotoPopup
                       photoVisibility={photoVisibility}
                       handleCancelClick={handleCancelClick}
-                      photo={photo.imageSrc}
+                      photo={photoSrc}
                     />
                   )}
                 </div>
