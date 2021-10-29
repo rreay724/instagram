@@ -6,6 +6,10 @@ import { useState } from "react";
 export default function Photos({ photos }) {
   const [photoVisibility, setPhotoVisibility] = useState(false);
   const [photoSrc, setPhotoSrc] = useState("");
+  const [comments, setComments] = useState([]);
+  const [docId, setDocId] = useState("");
+  const [dateCreated, setDateCreated] = useState("");
+  const [commentInput, setCommentInput] = useState("");
 
   const handlePicClick = () => {
     if (photoVisibility === false) {
@@ -42,6 +46,9 @@ export default function Photos({ photos }) {
                   onClick={() => {
                     handlePicClick();
                     setPhotoSrc(photo.imageSrc);
+                    setComments(photo.comments);
+                    setDocId(photo.docId);
+                    setDateCreated(photo.dateCreated);
                   }}
                 >
                   <img
@@ -88,6 +95,9 @@ export default function Photos({ photos }) {
                       photoVisibility={photoVisibility}
                       handleCancelClick={handleCancelClick}
                       photo={photoSrc}
+                      comments={comments}
+                      docId={docId}
+                      dateCreated={dateCreated}
                     />
                   )}
                 </div>
