@@ -34,7 +34,11 @@ export default function Photos({ photos }) {
             ? photos.map((photo) => (
                 <div
                   key={photo.docId}
-                  className="relative group cursor-pointer"
+                  className={
+                    photoVisibility
+                      ? "relative group"
+                      : "relative group cursor-pointer"
+                  }
                   onClick={() => {
                     handlePicClick();
                     setPhotoSrc(photo.imageSrc);
