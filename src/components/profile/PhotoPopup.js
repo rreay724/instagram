@@ -9,6 +9,7 @@ export default function PhotoPopup({
   comments,
   docId,
   dateCreated,
+  caption,
 }) {
   return (
     <>
@@ -42,6 +43,7 @@ export default function PhotoPopup({
               docId={docId}
               comments={comments}
               posted={dateCreated}
+              caption={caption}
             />
           </div>
         </div>

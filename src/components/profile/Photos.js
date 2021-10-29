@@ -9,6 +9,7 @@ export default function Photos({ photos }) {
   const [comments, setComments] = useState([]);
   const [docId, setDocId] = useState("");
   const [dateCreated, setDateCreated] = useState("");
+  const [caption, setCaption] = useState("");
   const [commentInput, setCommentInput] = useState("");
 
   const handlePicClick = () => {
@@ -49,6 +50,7 @@ export default function Photos({ photos }) {
                     setComments(photo.comments);
                     setDocId(photo.docId);
                     setDateCreated(photo.dateCreated);
+                    setCaption(photo.caption);
                   }}
                 >
                   <img
@@ -98,6 +100,7 @@ export default function Photos({ photos }) {
                       comments={comments}
                       docId={docId}
                       dateCreated={dateCreated}
+                      caption={caption}
                     />
                   )}
                 </div>

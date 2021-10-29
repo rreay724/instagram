@@ -10,6 +10,7 @@ export default function PhotoPopupComments({
   comments: allComments,
   posted,
   commentInput,
+  caption,
 }) {
   const [comments, setComments] = useState(allComments);
   const [showComments, setShowComments] = useState(false);
@@ -25,6 +26,7 @@ export default function PhotoPopupComments({
   return (
     <>
       <div className="p-4 pt-1 pb-4 z-60 overflow-scroll">
+        <p className="text-gray-base">{caption}</p>
         {comments.map((item) => (
           <p key={`${item.comment}-${item.displayName}`} className="mb-1">
             <Link to={`/p/${item.displayName}`}>
