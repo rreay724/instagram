@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-import Comments from "../post/Comments";
+import PhotoPopupComments from "../profile/PhotoPopupComments";
 
 export default function PhotoPopup({
   photoVisibility,
@@ -38,7 +38,11 @@ export default function PhotoPopup({
         <div className=" border-0 rounded-lg shadow-lg w-11/12 bg-white outline-none focus:outline-none m-48">
           <div className="flex ">
             <img src={photo} className="object-cover w-4/6" />
-            <Comments docId={docId} comments={comments} posted={dateCreated} />
+            <PhotoPopupComments
+              docId={docId}
+              comments={comments}
+              posted={dateCreated}
+            />
           </div>
         </div>
       </div>
