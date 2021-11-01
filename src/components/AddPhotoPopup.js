@@ -50,23 +50,35 @@ export default function AddPhotoPopup({
         <>
           <div className="flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 focus:outline-none bg-opacity-75 bg-black-light">
             {/*content*/}
-            <div className="border-0 md:mx-44 rounded-lg shadow-lg relative md:h-screen md:w-screen bg-white  focus:outline-none">
-              <div className="border-b border-gray-primary w-full h-8 mt-2 px-5 ">
-                <img
-                  src="/images/cancel.png"
-                  className="cursor-pointer h-5 mt-0.5"
+            <div className="border-0 md:mx-auto rounded-lg shadow-lg relative md:h-screen  bg-white  focus:outline-none my-4 md:w-9/12 w-10/12 mx-auto">
+              <div className="fixed md:top-3 md:right-3 top-1 right-1">
+                <svg
+                  aria-label="Close"
+                  class="_8-yf5 "
+                  color="#ffffff"
+                  fill="#ffffff"
+                  height="24"
+                  role="img"
+                  viewBox="0 0 48 48"
+                  width="24"
+                  className="cursor-pointer"
                   onClick={closeWindow}
-                  alt=""
-                />
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M41.8 9.8L27.5 24l14.2 14.2c.6.6.6 1.5 0 2.1l-1.4 1.4c-.6.6-1.5.6-2.1 0L24 27.5 9.8 41.8c-.6.6-1.5.6-2.1 0l-1.4-1.4c-.6-.6-.6-1.5 0-2.1L20.5 24 6.2 9.8c-.6-.6-.6-1.5 0-2.1l1.4-1.4c.6-.6 1.5-.6 2.1 0L24 20.5 38.3 6.2c.6-.6 1.5-.6 2.1 0l1.4 1.4c.6.6.6 1.6 0 2.2z"
+                    fill-rule="evenodd"
+                  ></path>
+                </svg>
               </div>
-              <div className="mt-10 p-10">
+              <div className="md:mt-10 md:p-10 mt-5 p-10">
                 <img
                   src={src}
                   alt={alt}
-                  className="w-auto h-96 mx-auto rounded-lg text-center"
+                  className="w-auto h-96 mx-auto rounded-lg text-center object-cover"
                 />
 
-                <div className="m-10">
+                <div className="md:m-10 my-7">
                   <label className="w-48 px-4 py-3 bg-blue-light font-bold text-sm rounded-lg text-white  tracking-wide  border border-blue cursor-pointer  ">
                     <span className="text-base leading-normal">
                       Select file from computer
