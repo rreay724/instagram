@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import PhotoPopupComments from "../profile/PhotoPopupComments";
 
@@ -36,15 +36,17 @@ export default function PhotoPopup({
         </div>
 
         {/*content*/}
-        <div className=" border-0 rounded-lg shadow-lg w-11/12 bg-white outline-none focus:outline-none m-48">
-          <div className="flex ">
-            <img src={photo} className="object-cover w-4/6" />
-            <PhotoPopupComments
-              docId={docId}
-              comments={comments}
-              posted={dateCreated}
-              caption={caption}
-            />
+        <div className=" border-0 rounded-lg shadow-lg w-8/12 bg-white outline-none focus:outline-none m-96">
+          <div className="flex flex-1">
+            <img src={photo} className="object-cover w-8/12" />
+            <div className="mx-auto mt-5">
+              <PhotoPopupComments
+                docId={docId}
+                comments={comments}
+                posted={dateCreated}
+                caption={caption}
+              />
+            </div>
           </div>
         </div>
       </div>

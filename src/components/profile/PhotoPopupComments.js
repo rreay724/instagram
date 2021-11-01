@@ -25,36 +25,40 @@ export default function PhotoPopupComments({
 
   return (
     <>
-      <div className="p-4 pt-1 pb-4 z-60 overflow-scroll">
-        <p className="text-gray-base">{caption}</p>
-        {comments.map((item) => (
-          <p key={`${item.comment}-${item.displayName}`} className="mb-1">
-            <Link to={`/p/${item.displayName}`}>
-              <span className="mr-1 font-bold">{item.displayName}</span>
-            </Link>
-            <span>{item.comment}</span>
-          </p>
-        ))}
-        {comments.slice(1, comments.length).map((item) => (
-          <p key={`${item.comment}-${item.displayName}`} className="mb-1">
-            <Link to={`/p/${item.displayName}`}>
-              {showComments ? (
+      {comments.length > 0 ? (
+        <div className="p-4 pt-1 pb-4 overflow-scroll">
+          <p className="text-gray-base">{caption}</p>
+          {comments.map((item) => (
+            <p key={`${item.comment}-${item.displayName}`} className="mb-1">
+              <Link to={`/p/${item.displayName}`}>
                 <span className="mr-1 font-bold">{item.displayName}</span>
-              ) : null}
-            </Link>
-            {showComments ? <span>{item.comment}</span> : null}
-          </p>
-        ))}
-        <p className="text-gray-base uppercase text-xs mt-2">
+              </Link>
+              <span>{item.comment}</span>
+            </p>
+          ))}
+          {comments.slice(1, comments.length).map((item) => (
+            <p key={`${item.comment}-${item.displayName}`} className="mb-1">
+              <Link to={`/p/${item.displayName}`}>
+                {showComments ? (
+                  <span className="mr-1 font-bold">{item.displayName}</span>
+                ) : null}
+              </Link>
+              {showComments ? <span>{item.comment}</span> : null}
+            </p>
+          ))}
+          {/* <p className="text-gray-base uppercase text-xs mt-2">
           {formatDistance(posted, new Date())} ago
-        </p>
-      </div>
-      {/* <AddComment
-        docId={docId}
-        comments={comments}
-        setComments={setComments}
-        commentInput={commentInput}
-      /> */}
+        </p> */}
+          {/* <AddComment
+          docId={docId}
+          comments={comments}
+          setComments={setComments}
+          commentInput={commentInput}
+        /> */}
+        </div>
+      ) : (
+        <p>No comments</p>
+      )}
     </>
   );
 }
