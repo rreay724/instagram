@@ -36,18 +36,18 @@ export default function PhotoPopup({
         </div>
 
         {/*content*/}
-        <div className=" border-0 rounded-lg shadow-lg w-8/12 bg-white outline-none focus:outline-none m-96">
-          <div className="flex flex-1">
-            <img src={photo} className="object-cover w-8/12" />
-            <div className="mx-auto mt-5">
+        <div className="w-5/12 bg-white outline-none focus:outline-none m-96">
+          {/* <div className="flex flex-1"> */}
+          <img src={photo} className="max-w-6/12" />
+          {/* <div className="mx-auto mt-5">
               <PhotoPopupComments
                 docId={docId}
                 comments={comments}
                 posted={dateCreated}
                 caption={caption}
               />
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
         </div>
       </div>
     </>
